@@ -1,14 +1,9 @@
 package dam.acceso.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
-@Entity
-public class Usuario {
-    @Id
+public class AuthRequest {
     private String username;
     private String password;
-    private String role;
+
 
     public String getUsername() {
         return username;
@@ -25,13 +20,4 @@ public class Usuario {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }
-

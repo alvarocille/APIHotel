@@ -1,10 +1,8 @@
 package dam.acceso.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
 import jakarta.persistence.*;
 @Entity
-@Data
 public class Habitacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

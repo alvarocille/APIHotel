@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,7 +33,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
+        http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequestsCustomizer -> authorizeRequestsCustomizer
                         .requestMatchers(HttpMethod.POST, "/authenticate").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/hoteles/**").permitAll()

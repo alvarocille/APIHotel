@@ -7,7 +7,7 @@ public class Habitacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int tamaño;
+    private int tamanio;
     private double precioPorNoche;
     private boolean desayuno;
     private boolean ocupada;
@@ -26,12 +26,12 @@ public class Habitacion {
         this.id = id;
     }
 
-    public int getTamaño() {
-        return tamaño;
+    public int getTamanio() {
+        return tamanio;
     }
 
-    public void setTamaño(int tamaño) {
-        this.tamaño = tamaño;
+    public void setTamanio(int tamanio) {
+        this.tamanio = tamanio;
     }
 
     public double getPrecioPorNoche() {

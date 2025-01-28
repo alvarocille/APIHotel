@@ -3,7 +3,6 @@ package dam.acceso.service;
 import dam.acceso.model.Habitacion;
 import dam.acceso.repository.HabitacionRepository;
 import dam.acceso.repository.HotelRepository;
-import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,7 @@ public class HabitacionService {
     private HotelRepository hotelRepository;
 
     public List<Habitacion> buscarPorTamañoYPrecio(int tamaño, double precioMin, double precioMax) {
-        return habitacionRepository.findByTamañoAndPrecioPorNocheBetweenAndOcupadaFalse(tamaño, precioMin, precioMax);
+        return habitacionRepository.findByTamanioAndPrecioPorNocheBetweenAndOcupadaFalse(tamaño, precioMin, precioMax);
     }
 
     public Habitacion agregarHabitacion(Habitacion habitacion) {

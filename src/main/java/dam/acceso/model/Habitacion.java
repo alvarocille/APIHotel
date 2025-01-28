@@ -17,6 +17,7 @@ public class Habitacion {
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 
+
     public Long getId() {
         return id;
     }
@@ -49,20 +50,20 @@ public class Habitacion {
         this.desayuno = desayuno;
     }
 
-    public Hotel getHotel() {
-        return hotel;
-    }
-
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
-    }
-
     public boolean isOcupada() {
         return ocupada;
     }
 
     public void setOcupada(boolean ocupada) {
         this.ocupada = ocupada;
+    }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 }
 

@@ -32,9 +32,9 @@ public class AuthController {
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
-        final String jwt = jwtUtil.generateToken(userDetails.getUsername());
 
-        return jwt;
+        return jwtUtil.generateToken(userDetails);
     }
 }
+
 

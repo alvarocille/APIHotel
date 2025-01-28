@@ -16,12 +16,9 @@ public class DataInitializer {
             if (!usuarioRepository.existsById("juan")) {
                 Usuario usuario = new Usuario();
                 usuario.setUsername("juan");
-                usuario.setPassword(passwordEncoder.encode("juan")); // Si estás en un perfil de pruebas, puedes evitar la codificación.
+                usuario.setPassword(passwordEncoder.encode("juan"));
                 usuario.setRole("ROLE_USER");
                 usuarioRepository.save(usuario);
-                System.out.println("Usuario 'juan' creado.");
-            } else {
-                System.out.println("Usuario 'juan' ya existe.");
             }
         };
     }

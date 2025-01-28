@@ -4,14 +4,18 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Date;
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "mySecretKey";
+    private final String SECRET_KEY = "juanjuan"; // Contraseña debe de ser extraída
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -34,12 +38,17 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(String username) {
-        return createToken(username);
+    public String generateToken(UserDetails userDetails) {
+        List<String> authorities = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+        return createToken(userDetails.getUsername(), authorities);
     }
 
-    private String createToken(String subject) {
-        return Jwts.builder().setSubject(subject).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+    private String createToken(String subject, List<String> authorities) {
+        Claims claims = Jwts.claims().setSubject(subject);
+        claims.put("authorities", authorities);
+        return Jwts.builder().setClaims(claims).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 horas
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY.getBytes()).compact();
     }
 

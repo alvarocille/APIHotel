@@ -2,6 +2,8 @@ package dam.acceso.service;
 
 import dam.acceso.model.Habitacion;
 import dam.acceso.repository.HabitacionRepository;
+import dam.acceso.repository.HotelRepository;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +16,20 @@ public class HabitacionService {
     @Autowired
     private HabitacionRepository habitacionRepository;
 
+    @Autowired
+    private HotelRepository hotelRepository;
+
     public List<Habitacion> buscarPorTamañoYPrecio(int tamaño, double precioMin, double precioMax) {
         return habitacionRepository.findByTamañoAndPrecioPorNocheBetweenAndOcupadaFalse(tamaño, precioMin, precioMax);
     }
 
     public Habitacion agregarHabitacion(Habitacion habitacion) {
-        return habitacionRepository.save(habitacion);
+        if (habitacion.getHotel() == null || !hotelRepository.existsById(habitacion.getHotel().getId())) {
+            System.out.println("El hotel no existe");
+            return null;
+        } else {
+            return habitacionRepository.save(habitacion);
+        }
     }
 
     public void eliminarHabitacion(Long id) {
@@ -35,8 +45,8 @@ public class HabitacionService {
         }
         return null;
     }
-
 }
+
 
 
 

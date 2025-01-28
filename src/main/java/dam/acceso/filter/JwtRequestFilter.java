@@ -39,23 +39,27 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 Claims claims = validateToken(request);
                 if (claims.get("authorities") != null) {
                     setUpSpringAuthentication(claims);
+                    System.out.println("JWT validado y autenticado para el usuario: " + claims.getSubject());
                 } else {
                     SecurityContextHolder.clearContext();
+                    System.out.println("El token no contiene authorities.");
                 }
             } else {
                 SecurityContextHolder.clearContext();
+                System.out.println("Token JWT no encontrado o no válido.");
             }
             chain.doFilter(request, response);
         } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            ((HttpServletResponse) response).sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
-            return;
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, e.getMessage());
+            System.out.println("Excepción al validar el JWT: " + e.getMessage());
         }
     }
 
     private Claims validateToken(HttpServletRequest request) {
         String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
-        return Jwts.parser().setSigningKey("mySecretKey".getBytes()).parseClaimsJws(jwtToken).getBody(); // Asegúrate de que esta clave es consistente
+        System.out.println(jwtToken);
+        return Jwts.parser().setSigningKey("juanjuan".getBytes()).parseClaimsJws(jwtToken).getBody(); // Contraseña debe de ser extraída
     }
 
     private void setUpSpringAuthentication(Claims claims) {
